@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useGetSettingsQuery } from './Api/BlogSlice';
 import './App.css';
 import type { Post } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const { data, isLoading, error } = useGetSettingsQuery();
@@ -30,6 +32,7 @@ function App() {
     );
     setCurrentPage(1);
   };
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
@@ -37,24 +40,27 @@ function App() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div>
-      <input
-        onChange={search}
-        value={searchTerm}
-        placeholder="Search by author"
-        className="h-[44px] w-full px-[40px] py-[10px] pl-[36px] focus:ring-0 border rounded-[8px]"
-        type="search"
-        autoFocus
-      />
+    <div className="app-container">
+      <div className="search-container">
+        <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        <input
+          onChange={search}
+          value={searchTerm}
+          placeholder="Search by author..."
+          className="search-input"
+          type="search"
+          autoFocus
+        />
+      </div>
 
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="loading-spinner">Loading...</div>
       ) : error ? (
-        <div>Error loading data</div>
+        <div className="error-message">Error loading data</div>
       ) : (
         <>
-          <div className='table-container'>
-            <table>
+          <div className='table-wrapper'>
+            <table className="data-table">
               <thead>
                 <tr>
                   <th>Author</th>
@@ -66,34 +72,36 @@ function App() {
               <tbody>
                 {currentPosts.map((post, index) => (
                   <tr key={index}>
-                    <td>{post.author || 'Unknown'}</td>
-                    <td>{post.title || 'No title'}</td>
-                    <td>{post.content || 'No content'}</td>
-                    <td>{post.publishedAt || 'Unknown date'}</td>
+                    <td data-label="Author">{post.author || 'Unknown'}</td>
+                    <td data-label="Title">{post.title || 'No title'}</td>
+                    <td data-label="Content" className="content-cell">
+                      {post.content || 'No content'}
+                    </td>
+                    <td data-label="Published">{post.publishedAt || 'Unknown date'}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
             {filteredPosts.length === 0 && (
-              <div>No posts found</div>
+              <div className="no-results">No posts found</div>
             )}
           </div>
 
-          {/* Pagination */}
           {filteredPosts.length > postsPerPage && (
-            <div className="pagination">
+            <div className="pagination-container">
               <button 
                 onClick={() => paginate(currentPage - 1)} 
                 disabled={currentPage === 1}
+                className="pagination-button"
               >
-                Previous
+                <FontAwesomeIcon icon={faAngleLeft} />
               </button>
               
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
                 <button
                   key={number}
                   onClick={() => paginate(number)}
-                  className={currentPage === number ? 'active' : ''}
+                  className={`pagination-button ${currentPage === number ? 'active' : ''}`}
                 >
                   {number}
                 </button>
@@ -102,8 +110,9 @@ function App() {
               <button 
                 onClick={() => paginate(currentPage + 1)} 
                 disabled={currentPage === totalPages}
+                className="pagination-button"
               >
-                Next
+                <FontAwesomeIcon icon={faAngleRight} />
               </button>
             </div>
           )}

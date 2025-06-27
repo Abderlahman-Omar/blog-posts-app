@@ -1,43 +1,125 @@
-.table-container{
-  overflow-x: auto;
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-table {
-  border-collapse: collapse;
+
+.search-container {
+  position: relative;
+  margin-bottom: 2rem;
+  max-width: 500px;
+}
+
+.search-input {
   width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-th, td {
+.search-input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.data-table th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1rem;
   text-align: left;
-  padding: 8px;
+  font-weight: 500;
 }
 
-tr:nth-child(even) {background-color: #f2f2f2;}
-.pagination {
+.data-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+.data-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.content-cell {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loading-spinner,
+.error-message,
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  color: #e53935;
+}
+
+.no-results {
+  color: #777;
+}
+
+.pagination-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
-  gap: 5px;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
 }
 
-.pagination button {
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  background: white;
+.pagination-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: #f5f5f5;
+  color: #333;
   cursor: pointer;
-  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-.pagination button:hover:not(:disabled) {
-  background: #eee;
+.pagination-button:hover:not(:disabled) {
+  background: #e0e0e0;
 }
 
-.pagination button:disabled {
-  cursor: not-allowed;
+.pagination-button:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.pagination button.active {
+.pagination-button.active {
   background: #4CAF50;
   color: white;
-  border-color: #4CAF50;
 }
