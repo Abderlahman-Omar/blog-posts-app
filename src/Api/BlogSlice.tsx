@@ -17,9 +17,6 @@ export const blogApi = createApi({
             query: () => ({
                 url: "/top-headlines?country=us&apiKey=28d521ac2ce84805be220dec4ab58f6b",
                 method: "GET",
-                headers: {
-                    "Authorization": `Bearer 28d521ac2ce84805be220dec4ab58f6b`
-                }
             }),
         }),
     }),
