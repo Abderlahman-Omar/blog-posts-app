@@ -4,19 +4,10 @@ export const blogApi = createApi({
     tagTypes: ["user"],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://newsapi.org/v2/",
-        prepareHeaders: (headers, { endpoint }) => {
+        prepareHeaders: (headers,) => {
             headers.set("Accept", "application/json");
             headers.set("Accept-Language", "en");
             headers.set("Authorization", `Bearer token`);
-            if (endpoint === "getCountries") {
-                headers.delete("Authorization");
-            }
-            if (endpoint === "getCurrencies") {
-                headers.delete("Authorization");
-            }
-            if (endpoint === "getAboutUs") {
-                headers.delete("Authorization");
-            }
             return headers;
         },
     }),
@@ -24,8 +15,11 @@ export const blogApi = createApi({
     endpoints: (builder) => ({
         getSettings: builder.query<any, void>({
             query: () => ({
-                url: "/top-headlines?country=us&apiKey=28d521ac2ce84805be220dec4ab58f6b",
+                url: "/top-headlines?country=us",
                 method: "GET",
+                headers: {
+                    "Authorization": `Bearer 28d521ac2ce84805be220dec4ab58f6b`
+                }
             }),
         }),
     }),
